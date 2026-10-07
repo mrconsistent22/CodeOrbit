@@ -1,0 +1,21 @@
+{
+  "data": {
+    "matchedUser": {
+      "username": "tourist",
+      "profile": {
+        "realName": "tourist",
+        "userAvatar": "https://assets.leetcode.com/users/default_avatar.jpg",
+        "starRating": 0.5,
+        "userSlug": "tourist"
+      },
+      "submitStats": {
+        "acSubmissionNum": [
+          { "difficulty": "All", "count": 4 },
+          { "difficulty": "Easy", "count": 1 },
+          { "difficulty": "Medium", "count": 2 },
+          { "difficulty": "Hard", "count": 1 }
+        ]
+      }
+    }
+  }
+}

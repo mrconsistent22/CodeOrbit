@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "baseUrl": ".",
+    "paths": {
+      "@codeorbit/adapters": ["packages/adapters/src/index.ts"],
+      "@codeorbit/config": ["packages/config/src/index.ts"],
+      "@codeorbit/shared": ["packages/shared/src/index.ts"]
+    },
+    "strict": true,
+    "esModuleInterop": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  }
+}

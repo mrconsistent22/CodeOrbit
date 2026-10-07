@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b1020" />
+    <title>CodeOrbit — Your coding journey, in orbit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+      .select-button select{border:0;background:transparent;color:inherit;font:inherit;outline:0;cursor:pointer}
+      .chart-panel{margin-top:18px}.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}.chart-title{color:#777e91;font:500 10px var(--mono);text-transform:uppercase;letter-spacing:.6px;margin:0 0 14px}.bar-chart{height:150px;display:flex;align-items:end;gap:14px;border-bottom:1px solid var(--line);padding:0 12px}.bar-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:end}.bar-item i{display:block;width:min(42px,70%);min-height:3px;border-radius:4px 4px 0 0;background:var(--purple)}.bar-item:nth-child(2) i{background:var(--blue)}.bar-item:nth-child(3) i{background:var(--orange)}.bar-item:nth-child(4) i{background:var(--green)}.bar-item span{font:9px var(--mono);color:var(--muted)}.line-chart{height:150px;display:flex;align-items:end;gap:7px;border-bottom:1px solid var(--line);padding:0 5px}.line-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:end;height:100%;gap:7px}.line-item i{width:9px;height:9px;border-radius:50%;background:var(--purple);box-shadow:0 0 0 3px #eceaff}.line-item b{width:100%;max-width:24px;background:#d8d4fb;border-radius:4px 4px 0 0;min-height:3px}.line-item span{font:8px var(--mono);color:var(--muted)}@media(max-width:800px){.chart-grid{grid-template-columns:1fr}}
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-head">
+          <div class="brand">
+            <span class="brand-mark">◒</span>
+            <span>Code<span>Orbit</span></span>
+          </div>
+        </div>
+        <div class="workspace-label nav-rule-label">Your orbit</div>
+        <nav class="main-nav" aria-label="Main navigation">
+          <button class="nav-item active" data-page="home"><span>⌂</span> Home</button>
+        </nav>
+        <div class="workspace-label nav-rule-label">Profile tracker</div>
+        <nav class="main-nav" aria-label="Profile tracker">
+          <button class="nav-item" data-page="overview"><span>◎</span> Portfolio</button>
+        </nav>
+        <div class="workspace-label nav-rule-label">Question tracker</div>
+        <nav class="main-nav" aria-label="Question tracker">
+          <button class="nav-item" data-page="sheets"><span>▣</span> Company Wise Kit</button>
+          <button class="nav-item" data-page="revision"><span>↻</span> Revision Queue <b class="alert-count">8</b></button>
+          <button class="nav-item" data-page="explore"><span>⌕</span> Explore Sheets</button>
+          <button class="nav-item" data-page="sheets"><span>▤</span> My Sheets <b>3</b></button>
+          <button class="nav-item" data-page="revision"><span>▤</span> Notes</button>
+        </nav>
+        <div class="workspace-label nav-rule-label">Event tracker</div>
+        <nav class="main-nav" aria-label="Event tracker">
+          <button class="nav-item" data-page="contests"><span>▣</span> Contests</button>
+        </nav>
+        <div class="workspace-label nav-rule-label">AI features</div>
+        <nav class="main-nav" aria-label="AI features">
+          <button class="nav-item ai-nav" data-page="planner"><span>✦</span> AI planner <i>New</i></button>
+          <button class="nav-item ai-nav" data-page="assistant"><span>✧</span> AI assistant</button>
+        </nav>
+        <div class="workspace-label nav-rule-label">Community</div>
+        <nav class="main-nav" aria-label="Community">
+          <button class="nav-item" data-page="overview"><span>♜</span> Leaderboard</button>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="workspace-label nav-rule-label">Support</div>
+          <button class="nav-item" data-page="help"><span>?</span> Help Center</button>
+          <button class="nav-item" data-page="feedback"><span>▤</span> Feedback</button>
+          <button class="nav-item profile-action" data-page="settings"><span>♙</span> Edit Profile</button>
+          <button class="nav-item logout-action" data-page="home"><span>↪</span> Log Out</button>
+          <div class="sidebar-user">
+            <div class="avatar avatar-small">AK</div>
+            <div><strong>Alex Kumar</strong><small>Placement prep</small></div>
+            <span class="more">•••</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">☰</button>
+            <button class="sidebar-toggle" id="sidebarToggle" aria-label="Collapse navigation" aria-expanded="true" title="Collapse navigation">‹</button>
+          </div>
+          <div class="breadcrumb"><span>CodeOrbit</span><strong>/</strong><span id="pageLabel">Home</span></div>
+          <div class="top-actions">
+            <button class="icon-button" aria-label="Search">⌕</button>
+            <button class="icon-button has-dot" aria-label="Notifications">♢</button>
+            <div class="theme-control">
+              <button class="theme-button" id="themeButton" aria-label="Choose theme" aria-expanded="false" title="Choose theme">☼ <span>Theme</span>⌄</button>
+              <div class="theme-menu" id="themeMenu" role="menu">
+                <button data-theme="light" role="menuitem"><span>☼</span> Light</button>
+                <button data-theme="dark" role="menuitem"><span>◐</span> Dark</button>
+                <button data-theme="system" role="menuitem"><span>◌</span> System</button>
+              </div>
+            </div>
+            <div class="avatar">AK</div>
+          </div>
+        </header>
+
+        <div id="pageContent">
+          <section class="page-section active-page" data-view="home">
+            <div class="home-hero">
+              <div class="home-copy">
+                <p class="eyebrow">MONDAY, 28 SEPTEMBER 2026 <span class="live-dot"></span></p>
+                <h1>Good morning, Alex.</h1>
+                <p class="lede">Your preparation at a glance.</p>
+              </div>
+              <div class="home-actions"><button class="button button-primary" data-page="revision">Start revision <span>→</span></button><button class="button button-ghost" data-page="sheets">View my sheets</button></div>
+            </div>
+            <div class="home-grid">
+              <article class="home-note"><div><p class="eyebrow">REVISION QUEUE</p><h2>8 items due today</h2><p>Two medium problems and six quick reviews.</p></div><button class="text-button" data-page="revision">Open queue →</button></article>
+              <article class="home-next"><div><p class="eyebrow">NEXT PROBLEM</p><h2>Longest Substring</h2><p>Sliding Window · Medium · 25 min</p></div><button class="round-arrow" data-page="revision">→</button></article>
+            </div>
+            <div class="home-workspace">
+              <section class="home-section"><div class="section-heading"><div><p class="eyebrow">CONTINUE LEARNING</p><h2>Followed sheets</h2></div><button class="text-button" data-page="sheets">View all →</button></div><div class="home-list"><button data-page="sheets"><span class="list-icon blind">B</span><span><strong>Blind 75</strong><small>48 of 75 complete · Arrays &amp; Hashing</small></span><b>64%</b></button><button data-page="sheets"><span class="list-icon os">OS</span><span><strong>Operating Systems</strong><small>12 of 28 complete · Processes &amp; Threads</small></span><b>42%</b></button><button data-page="sheets"><span class="list-icon neet">N</span><span><strong>NeetCode 150</strong><small>57 of 150 complete · Two Pointers</small></span><b>38%</b></button></div></section>
+              <section class="home-section"><div class="section-heading"><div><p class="eyebrow">UP NEXT</p><h2>Upcoming contests</h2></div><button class="text-button" data-page="contests">Calendar →</button></div><div class="home-list contest-mini"><button data-page="contests"><span class="date-chip"><b>03</b><small>OCT</small></span><span><strong>Weekly Contest 421</strong><small>LeetCode · 1h 30m</small></span><b>5d</b></button><button data-page="contests"><span class="date-chip"><b>05</b><small>OCT</small></span><span><strong>Codeforces Round 978</strong><small>Codeforces · 2h</small></span><b>7d</b></button><button data-page="contests"><span class="date-chip"><b>12</b><small>OCT</small></span><span><strong>Starters 158</strong><small>CodeChef · 3h</small></span><b>14d</b></button></div></section>
+            </div>
+            <div class="home-bottom">
+              <section class="activity-panel">
+                <div class="section-heading"><div><p class="eyebrow">RECENT ACTIVITY</p><h2>What you have shipped</h2></div><button class="text-button" data-page="overview">Open portfolio →</button></div>
+                <div class="activity-table">
+                  <div class="activity-row activity-header"><span>ITEM</span><span>TYPE</span><span>WHEN</span><span>RESULT</span></div>
+                  <div class="activity-row"><span><strong>Valid Parentheses</strong><small>Stack · Easy</small></span><span>Problem</span><span>Today, 10:42</span><b class="result-good">Solved</b></div>
+                  <div class="activity-row"><span><strong>Binary Search</strong><small>Searching · Medium</small></span><span>Problem</span><span>Yesterday</span><b class="result-good">Solved</b></div>
+                  <div class="activity-row"><span><strong>Arrays &amp; Hashing</strong><small>Blind 75 · 4 notes</small></span><span>Review</span><span>Yesterday</span><b class="result-neutral">Reviewed</b></div>
+                </div>
+              </section>
+              <aside class="signal-panel">
+                <p class="eyebrow">THIS WEEK</p><div class="signal-number">6<span>/10</span></div><h2>focused sessions</h2><div class="signal-meter"><i></i></div><p>Four more sessions match last week's pace.</p><button class="text-button" data-page="planner">Adjust your plan →</button>
+              </aside>
+            </div>
+          </section>
+
+          <section class="page-section" data-view="overview">
+            <div class="welcome-row">
+              <div>
+                <p class="eyebrow">PUBLIC PROFILE · ALEX KUMAR <span class="live-dot"></span></p>
+                <h1>Alex’s coding portfolio <span class="wave">✦</span></h1>
+                <p class="lede">A living snapshot of the work behind the next role.</p>
+              </div>
+              <button class="button button-primary" data-page="planner"><span>✦</span> Plan my week</button>
+            </div>
+
+            <div class="stats-grid">
+              <article class="stat-card accent-lilac">
+                <div class="stat-header"><span>Problems solved</span><span class="stat-icon">⌁</span></div>
+                <strong class="stat-number">347</strong>
+                <div class="stat-footer"><span class="trend up">↗ 12.4%</span><span>vs last month</span></div>
+              </article>
+              <article class="stat-card accent-orange">
+                <div class="stat-header"><span>Current streak</span><span class="stat-icon">♨</span></div>
+                <strong class="stat-number">12 <small>days</small></strong>
+                <div class="stat-footer"><span class="trend warm">Best: 28 days</span><span>Keep it going!</span></div>
+              </article>
+              <article class="stat-card accent-blue">
+                <div class="stat-header"><span>Study time</span><span class="stat-icon">◷</span></div>
+                <strong class="stat-number">18.5 <small>hrs</small></strong>
+                <div class="stat-footer"><span class="trend up">↗ 8.2%</span><span>this month</span></div>
+              </article>
+              <article class="stat-card accent-green">
+                <div class="stat-header"><span>Readiness score</span><span class="stat-icon">✧</span></div>
+                <strong class="stat-number">72<span class="percent">%</span></strong>
+                <div class="stat-footer"><span class="trend positive">On track</span><span>for SDE interviews</span></div>
+              </article>
+            </div>
+
+            <div class="dashboard-grid">
+              <article class="panel activity-panel">
+                <div class="panel-heading">
+                  <div><h2>Activity overview</h2><p>Your coding rhythm over the last 12 months</p></div>
+                  <label class="select-button" for="activityPlatform"><span class="sr-only">Activity platform</span><select id="activityPlatform"><option value="">All platforms</option><option value="codeforces">Codeforces</option><option value="leetcode">LeetCode</option><option value="codechef">CodeChef</option><option value="gfg">GeeksforGeeks</option></select></label>
+                </div>
+                <div class="activity-summary"><strong id="activityTotal">0</strong><span>contributions in the last year</span><span class="trend up" id="activityStatus">Loading activity…</span></div>
+                <div class="heatmap-wrap">
+                  <div class="month-labels" id="heatmapMonths" aria-hidden="true"></div>
+                  <div class="heatmap" aria-label="Coding activity heatmap">
+                    <div class="day-labels"><span>Mon</span><span>Wed</span><span>Fri</span></div>
+                    <div class="heatmap-grid" id="heatmapGrid" role="grid" aria-label="Daily coding activity"></div>
+                  </div>
+                  <div class="legend"><span>Less</span><i class="level-0"></i><i class="level-1"></i><i class="level-2"></i><i class="level-3"></i><i class="level-4"></i><span>More</span></div>
+                </div>
+              </article>
+
+              <article class="panel focus-panel">
+                <div class="panel-heading"><div><h2>Today’s focus</h2><p>Your next best action</p></div><span class="sparkle">✦</span></div>
+                <div class="focus-card">
+                  <div class="focus-icon">⌘</div>
+                  <div><span class="tag tag-purple">BLIND 75</span><h3>Two Sum</h3><p>Arrays &amp; Hashing <span>·</span> Easy</p></div>
+                  <button class="round-arrow" aria-label="Open Two Sum">↗</button>
+                </div>
+                <div class="focus-meta"><span><b>4</b> of 14 in this topic</span><span>~25 min</span></div>
+                <button class="button button-dark full-width" data-page="sheets">Continue practice <span>→</span></button>
+              </article>
+            </div>
+
+            <div class="lower-grid">
+              <article class="panel sheets-panel">
+                <div class="panel-heading"><div><h2>Continue your sheets</h2><p>Pick up where you left off</p></div><button class="text-button" data-page="sheets">View all <span>→</span></button></div>
+                <div class="sheet-list">
+                  <div class="sheet-row"><div class="sheet-logo blind">B<span>75</span></div><div class="sheet-info"><strong>Blind 75</strong><span>Arrays &amp; Hashing</span><div class="progress-track"><i style="width:64%"></i></div></div><div class="sheet-percent">48<span>/75</span></div><span class="row-arrow">→</span></div>
+                  <div class="sheet-row"><div class="sheet-logo neet">N<span>150</span></div><div class="sheet-info"><strong>NeetCode 150</strong><span>Two Pointers</span><div class="progress-track"><i style="width:38%"></i></div></div><div class="sheet-percent">57<span>/150</span></div><span class="row-arrow">→</span></div>
+                  <div class="sheet-row"><div class="sheet-logo os">OS</div><div class="sheet-info"><strong>Operating Systems</strong><span>Processes &amp; Threads</span><div class="progress-track"><i class="green-progress" style="width:42%"></i></div></div><div class="sheet-percent">12<span>/28</span></div><span class="row-arrow">→</span></div>
+                </div>
+              </article>
+              <article class="panel contests-panel">
+                <div class="panel-heading"><div><h2>Upcoming contests</h2><p>Stay in the loop</p></div><button class="text-button" data-page="contests">Calendar <span>→</span></button></div>
+                <div class="contest-list">
+                  <div class="contest-row"><div class="contest-date"><b>03</b><span>OCT</span></div><div><strong>Weekly Contest 421</strong><span>LeetCode <em class="platform-dot lc"></em> · 1h 30m</span></div><div class="contest-days">in 5 days</div></div>
+                  <div class="contest-row"><div class="contest-date"><b>05</b><span>OCT</span></div><div><strong>Codeforces Round 978</strong><span>Codeforces <em class="platform-dot cf"></em> · 2h</span></div><div class="contest-days">in 7 days</div></div>
+                  <div class="contest-row"><div class="contest-date"><b>12</b><span>OCT</span></div><div><strong>Starters 158</strong><span>CodeChef <em class="platform-dot cc"></em> · 3h</span></div><div class="contest-days">in 14 days</div></div>
+                </div>
+              </article>
+            </div>
+            <article class="panel chart-panel">
+              <div class="panel-heading"><div><h2>Progress signals</h2><p>Difficulty mix and monthly submissions</p></div><span class="tag tag-purple">12 MONTHS</span></div>
+              <div class="chart-grid">
+                <div><h3 class="chart-title">Solved by difficulty</h3><div class="bar-chart" id="difficultyChart" aria-label="Solved problems by difficulty"></div></div>
+                <div><h3 class="chart-title">Monthly activity</h3><div class="line-chart" id="monthlyChart" aria-label="Monthly coding activity"></div></div>
+              </div>
+            </article>
+          </section>
+
+          <section class="page-section" data-view="sheets">
+            <div class="page-title-row"><div><p class="eyebrow">YOUR CURRICULUM</p><h1>My sheets</h1><p class="lede">Pick up where you left off across your followed learning paths.</p></div><button class="button button-primary" data-page="explore">+ Explore library</button></div>
+            <div class="filter-row"><button class="filter active">All sheets</button><button class="filter">DSA</button><button class="filter">Core CS</button><button class="filter">Bookmarked</button><div class="filter-spacer"></div><button class="select-button">Sort: Recently active ⌄</button></div>
+            <div class="sheet-cards">
+              <article class="sheet-card"><div class="card-top"><div class="sheet-logo blind">B<span>75</span></div><span class="tag tag-purple">DSA</span></div><h2>Blind 75</h2><p>Essential coding interview questions across 14 key patterns.</p><div class="card-progress"><div><span>64% complete</span><b>48 / 75</b></div><div class="progress-track"><i style="width:64%"></i></div></div><button class="button button-dark full-width">Resume sheet →</button></article>
+              <article class="sheet-card"><div class="card-top"><div class="sheet-logo neet">N<span>150</span></div><span class="tag tag-blue">DSA</span></div><h2>NeetCode 150</h2><p>A comprehensive roadmap to master data structures and algorithms.</p><div class="card-progress"><div><span>38% complete</span><b>57 / 150</b></div><div class="progress-track"><i style="width:38%"></i></div></div><button class="button button-dark full-width">Resume sheet →</button></article>
+              <article class="sheet-card"><div class="card-top"><div class="sheet-logo os">OS</div><span class="tag tag-green">SUBJECT</span></div><h2>Operating Systems</h2><p>Understand the concepts asked in every systems interview.</p><div class="card-progress"><div><span>42% complete</span><b>12 / 28</b></div><div class="progress-track"><i class="green-progress" style="width:42%"></i></div></div><button class="button button-dark full-width">Resume sheet →</button></article>
+            </div>
+          </section>
+
+          <section class="page-section" data-view="explore">
+            <div class="page-title-row"><div><p class="eyebrow">THE CODEORBIT LIBRARY</p><h1>Explore sheets</h1><p class="lede">Find a structured path for the skill you want to build next.</p></div><button class="button button-primary">+ Create a custom sheet</button></div>
+            <div class="filter-row"><button class="filter active">All paths</button><button class="filter">Interview prep</button><button class="filter">Core CS</button><button class="filter">Competitive programming</button><div class="filter-spacer"></div><button class="select-button">Most popular ⌄</button></div>
+            <div class="explore-feature panel"><div class="explore-feature-copy"><span class="tag tag-yellow">EDITOR'S PICK</span><h2>Build your interview foundation</h2><p>A focused collection of patterns, fundamentals, and systems concepts for your next opportunity.</p><button class="button button-dark">View collection →</button></div><div class="feature-orbit" aria-hidden="true"><span>ARRAYS</span><span>GRAPHS</span><span>OS</span><b>START<br />HERE</b></div></div>
+            <div class="library-grid"><article class="library-card"><div class="library-icon icon-indigo">B<span>75</span></div><span class="tag tag-purple">75 PROBLEMS</span><h2>Blind 75</h2><p>The essential interview patterns, distilled.</p><button class="text-button">View sheet →</button></article><article class="library-card"><div class="library-icon icon-coral">N<span>150</span></div><span class="tag tag-orange">150 PROBLEMS</span><h2>NeetCode 150</h2><p>A complete roadmap from basics to advanced.</p><button class="text-button">View sheet →</button></article><article class="library-card"><div class="library-icon icon-mint">OS</div><span class="tag tag-green">28 TOPICS</span><h2>Operating Systems</h2><p>Processes, memory, concurrency, and more.</p><button class="text-button">View subject →</button></article><article class="library-card"><div class="library-icon icon-blue">DB</div><span class="tag tag-blue">24 TOPICS</span><h2>DBMS essentials</h2><p>Build confidence in database interviews.</p><button class="text-button">View subject →</button></article></div>
+          </section>
+
+          <section class="page-section" data-view="revision"><div class="page-title-row"><div><p class="eyebrow">SPACED REPETITION</p><h1>Revision queue</h1><p class="lede">Keep the concepts you’ve learned fresh.</p></div><div class="queue-pill"><span>8</span> due today</div></div><div class="revision-hero panel"><div><span class="tag tag-orange">TODAY’S SESSION</span><h2>You've got this, Alex.</h2><p>Reviewing these 8 problems now keeps your recall strong later.</p></div><div class="revision-ring"><strong>8</strong><span>items</span></div></div><div class="panel table-panel"><div class="panel-heading"><div><h2>Due for review</h2><p>Prioritized by difficulty and last attempt</p></div><button class="button button-primary">Start session →</button></div><div class="revision-item"><span class="check-circle"></span><div><strong>Longest Substring Without Repeating Characters</strong><span>Sliding Window · Medium</span></div><span class="review-time">Due today</span><span class="difficulty medium">Medium</span></div><div class="revision-item"><span class="check-circle"></span><div><strong>Merge Intervals</strong><span>Intervals · Medium</span></div><span class="review-time">Due today</span><span class="difficulty medium">Medium</span></div><div class="revision-item"><span class="check-circle"></span><div><strong>Valid Parentheses</strong><span>Stack · Easy</span></div><span class="review-time">Due today</span><span class="difficulty easy">Easy</span></div></div></section>
+
+          <section class="page-section" data-view="contests"><div class="page-title-row"><div><p class="eyebrow">COMPETE WITH PURPOSE</p><h1>Contest calendar</h1><p class="lede">Never miss a chance to test your progress.</p></div><div><a class="button button-light" id="exportContests" href="/api/v1/contests.ics" download="codeorbit-contests.ics">Export .ics</a> <button class="button button-primary">+ Add reminder</button></div></div><div class="calendar-toolbar panel"><button class="icon-button" id="previousMonth" aria-label="Previous month">←</button><h2 id="calendarTitle">Contest calendar</h2><button class="icon-button" id="nextMonth" aria-label="Next month">→</button><div class="filter-spacer"></div><label class="select-button" for="contestPlatform"><span class="sr-only">Contest platform</span><select id="contestPlatform"><option value="">All platforms</option><option value="codeforces">Codeforces</option><option value="leetcode">LeetCode</option><option value="codechef">CodeChef</option><option value="gfg">GeeksforGeeks</option></select></label></div><div class="calendar-grid panel"><div class="weekdays"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div><div class="calendar-days" id="calendarDays"></div></div></section>
+
+          <section class="page-section" data-view="planner"><div class="page-title-row"><div><p class="eyebrow">PERSONALIZED BY AI</p><h1>Your study planner</h1><p class="lede">A clear path from today to interview-ready.</p></div><button class="button button-primary">↻ Regenerate plan</button></div><div class="planner-layout"><div class="panel plan-card"><div class="plan-heading"><span class="tag tag-purple">ACTIVE PLAN · WEEK 3 OF 8</span><h2>SDE interview ready</h2><p>Balanced DSA and CS fundamentals, shaped around your weak topics.</p><div class="plan-progress"><i style="width:36%"></i></div><div class="plan-progress-label"><span>36% of plan complete</span><b>5 weeks left</b></div></div><div class="week-row active"><span class="week-number">03</span><div><strong>Patterns &amp; complexity</strong><span>12 problems · 2 subject topics</span></div><span class="week-status">In progress</span></div><div class="week-row"><span class="week-number">04</span><div><strong>Graphs &amp; advanced trees</strong><span>15 problems · 1 subject topic</span></div><span class="week-status muted">Upcoming</span></div><div class="week-row"><span class="week-number">05</span><div><strong>Mock interview sprint</strong><span>10 problems · 2 mock contests</span></div><span class="week-status muted">Upcoming</span></div></div><div class="panel goal-card"><span class="goal-icon">✦</span><h3>Interview goal</h3><strong>Software Engineer</strong><p>Ready by <b>Nov 2, 2026</b></p><div class="goal-stat"><span>Daily commitment</span><b>2 hrs / day</b></div><button class="text-button">Edit goal →</button></div></div></section>
+
+          <section class="page-section" data-view="assistant"><div class="page-title-row"><div><p class="eyebrow">YOUR STUDY COMPANION</p><h1>AI assistant</h1><p class="lede">Ask about your progress, get a hint, or find your next best problem.</p></div></div><div class="assistant-layout"><div class="panel chat-panel"><div class="chat-top"><div class="assistant-avatar">✦</div><div><strong>Orbit assistant</strong><span>Uses your CodeOrbit data only <i></i></span></div><button class="icon-button">•••</button></div><div class="chat-messages"><div class="message assistant-message">Hey Alex! I’m ready to help you stay on track. What are we working on today?</div><div class="message user-message">What should I solve today?</div><div class="message assistant-message">Based on your current plan, I’d recommend <b>Longest Substring Without Repeating Characters</b>. It targets your weak Sliding Window topic and is due for revision today.</div></div><div class="suggestions"><button>Give me a hint</button><button>How am I doing?</button><button>What’s next?</button></div><div class="chat-input"><input placeholder="Ask Orbit anything about your journey..." aria-label="Message Orbit" /><button aria-label="Send message">↑</button></div></div><div class="panel assistant-side"><span class="sparkle">✦</span><h3>Helpful boundaries</h3><p>Orbit gives tiered hints and uses only your connected progress. It will never write a full solution.</p><div class="assistant-tip"><span>1</span><div><b>Nudge</b><small>A conceptual direction</small></div></div><div class="assistant-tip"><span>2</span><div><b>Approach</b><small>How to think about it</small></div></div><div class="assistant-tip"><span>3</span><div><b>Pseudocode</b><small>Steps, never runnable code</small></div></div></div></div></section>
+
+          <section class="page-section" data-view="accounts"><div class="page-title-row"><div><p class="eyebrow">DATA SOURCES</p><h1>Connected accounts</h1><p class="lede">Public handles only. No passwords, ever.</p></div><button class="button button-primary">+ Connect account</button></div><div class="accounts-grid"><article class="panel account-card connected"><div class="account-brand lc-brand">LC</div><div><h2>LeetCode</h2><p>alex_kumar_</p></div><span class="status-dot"></span><span class="connected-label">Synced 2h ago</span><div class="account-stat"><span>Problems solved</span><strong>214</strong></div><button class="text-button">Manage connection →</button></article><article class="panel account-card connected"><div class="account-brand cf-brand">CF</div><div><h2>Codeforces</h2><p>alexkumar</p></div><span class="status-dot"></span><span class="connected-label">Synced 3h ago</span><div class="account-stat"><span>Rating</span><strong>1,482</strong></div><button class="text-button">Manage connection →</button></article><article class="panel account-card disconnected"><div class="account-brand cc-brand">CC</div><div><h2>CodeChef</h2><p>Not connected</p></div><span class="add-account">+</span><div class="account-stat"><span>Bring your stats together</span><strong>→</strong></div><button class="button button-light full-width">Connect CodeChef</button></article><article class="panel account-card disconnected"><div class="account-brand gfg-brand">G</div><div><h2>GeeksforGeeks</h2><p>Not connected</p></div><span class="add-account">+</span><div class="account-stat"><span>Bring your stats together</span><strong>→</strong></div><button class="button button-light full-width">Connect GFG</button></article></div></section>
+
+          <section class="page-section" data-view="help"><div class="page-title-row"><div><p class="eyebrow">A LITTLE ORIENTATION</p><h1>Help centre</h1><p class="lede">Answers for the moments when you feel stuck.</p></div><button class="button button-primary">Contact support</button></div><div class="help-search panel"><span>⌕</span><input placeholder="Search guides, accounts, revision..." aria-label="Search help centre" /></div><div class="help-grid"><article class="help-card help-purple"><span>◎</span><h2>Connect an account</h2><p>Link public handles and let CodeOrbit keep your stats fresh.</p><button class="text-button">Read guide →</button></article><article class="help-card help-yellow"><span>↻</span><h2>How revision works</h2><p>Understand spaced repetition and make your queue work harder.</p><button class="text-button">Read guide →</button></article><article class="help-card help-mint"><span>✦</span><h2>Build a study plan</h2><p>Turn a role, a deadline, and your available time into a plan.</p><button class="text-button">Read guide →</button></article></div><div class="faq-strip panel"><div><p class="eyebrow">POPULAR QUESTIONS</p><h2>Still wondering?</h2></div><div class="faq-links"><button>Can I use CodeOrbit without linking accounts? <span>+</span></button><button>How is my readiness score calculated? <span>+</span></button><button>Does Orbit write solutions? <span>+</span></button></div></div></section>
+
+          <section class="page-section" data-view="feedback"><div class="feedback-layout"><div><p class="eyebrow">SHAPE THE ORBIT</p><h1>Tell us what would make this better.</h1><p class="lede">CodeOrbit is being built with people who are actually preparing. Your sharpest opinion is useful here.</p><div class="feedback-stamp">✦ <span>Every response is read by the product team.</span></div></div><form class="panel feedback-form"><label>What kind of feedback is this?<select><option>Suggest an improvement</option><option>Report a problem</option><option>Share a win</option></select></label><label>Tell us more<textarea placeholder="What should we know?"></textarea></label><label class="check-label"><input type="checkbox" /> You can follow up with me about this</label><button class="button button-primary full-width" type="button">Send feedback ↗</button></form></div></section>
+
+          <section class="page-section" data-view="settings"><div class="page-title-row"><div><p class="eyebrow">YOUR PREFERENCES</p><h1>Settings</h1><p class="lede">Make CodeOrbit work the way you do.</p></div></div><div class="settings-layout"><div class="panel settings-nav"><button class="setting-tab active">Profile</button><button class="setting-tab">Notifications</button><button class="setting-tab">Privacy &amp; data</button><button class="setting-tab">AI preferences</button></div><div class="panel settings-content"><h2>Profile details</h2><p>Shown on your private workspace and public profile if enabled.</p><label>Display name<input id="settingsDisplayName" value="Alex Kumar" /></label><label>Username<input id="settingsUsername" value="alex-kumar" /></label><label>Timezone<input id="settingsTimezone" value="UTC" /></label><label>Primary goal<select id="settingsGoal"><option>Prepare for SDE interviews</option><option>Competitive programming</option><option>Refresh core CS</option></select></label><div class="setting-actions"><button class="button button-primary" id="saveSettings" type="button">Save changes</button></div><div class="settings-danger"><h3>Delete account</h3><p>This permanently removes your profile, linked accounts, activity, and reminders.</p><button class="button button-light" id="deleteAccount" type="button">Delete my account</button></div><p id="settingsStatus" role="status"></p></div></div></section>
+        </div>
+      </main>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

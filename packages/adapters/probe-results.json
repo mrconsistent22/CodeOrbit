@@ -1,0 +1,25 @@
+{
+  "capturedAt": "2026-10-07",
+  "codeforces": {
+    "go": true,
+    "endpoints": ["user.info", "user.status", "contest.list"],
+    "decision": "go"
+  },
+  "leetcode": {
+    "go": true,
+    "endpoints": ["GraphQL matchedUser profile and submitStats"],
+    "decision": "go-with-unofficial-endpoint-and-fixtures"
+  },
+  "codechef": {
+    "profileProbe": "https://www.codechef.com/users/aashish returned HTTP 200",
+    "decision": "defer-until-parser-spike"
+  },
+  "gfg": {
+    "profileProbe": "https://auth.geeksforgeeks.org/user/gfg/ returned HTTP 200",
+    "decision": "defer-until-parser-spike"
+  },
+  "clist": {
+    "probe": "https://clist.by/api/v4/contest/?limit=1 returned HTTP 401 without credentials",
+    "decision": "blocked-until-api-key-is-configured"
+  }
+}

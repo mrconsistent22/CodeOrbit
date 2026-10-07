@@ -1,0 +1,19 @@
+{
+  "name": "@codeorbit/config",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --import tsx --test"
+  },
+  "dependencies": {
+    "@codeorbit/shared": "workspace:*",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}

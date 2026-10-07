@@ -1,0 +1,25 @@
+{
+  "status": "OK",
+  "result": [
+    {
+      "id": 392217392,
+      "contestId": 2268,
+      "creationTimeSeconds": 1790438553,
+      "problem": {
+        "contestId": 2268,
+        "index": "D",
+        "name": "AghaBalaSar and Hamed",
+        "type": "PROGRAMMING",
+        "points": 2250,
+        "rating": 2600,
+        "tags": ["data structures", "dp", "trees"]
+      },
+      "author": {
+        "members": [{ "handle": "tourist" }],
+        "participantType": "CONTESTANT"
+      },
+      "programmingLanguage": "C++23 (GCC 14-64, msys2)",
+      "verdict": "OK"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "status": "OK",
+  "result": [
+    {
+      "id": 2261,
+      "name": "WorldQuant Round 1 (Codeforces Round Div. 1 + Div. 2)",
+      "type": "CF",
+      "phase": "BEFORE",
+      "frozen": false,
+      "durationSeconds": 10800,
+      "startTimeSeconds": 1792247700
+    },
+    {
+      "id": 2273,
+      "name": "Codeforces Round (Div. 1)",
+      "type": "CF",
+      "phase": "BEFORE",
+      "frozen": false,
+      "durationSeconds": 9000,
+      "startTimeSeconds": 1791743700
+    }
+  ]
+}

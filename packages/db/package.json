@@ -1,0 +1,13 @@
+{
+  "name": "@codeorbit/db",
+  "private": true,
+  "scripts": {
+    "seed": "node prisma/seed.mjs",
+    "typecheck": "echo Database package is validated through Prisma",
+    "lint": "echo Database package is validated through Prisma",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.10.0"
+  }
+}

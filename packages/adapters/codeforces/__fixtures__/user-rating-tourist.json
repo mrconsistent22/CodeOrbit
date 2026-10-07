@@ -1,0 +1,14 @@
+{
+  "status": "OK",
+  "result": [
+    {
+      "contestId": 2268,
+      "contestName": "Codeforces Round 1124 (Div. 1)",
+      "handle": "tourist",
+      "rank": 1,
+      "ratingUpdateTimeSeconds": 1790438553,
+      "oldRating": 3370,
+      "newRating": 3384
+    }
+  ]
+}

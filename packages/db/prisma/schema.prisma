@@ -1,0 +1,245 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  user
+  admin
+}
+
+enum PlatformId {
+  leetcode
+  codeforces
+  codechef
+  gfg
+  other
+}
+
+enum SyncStatus {
+  pending
+  syncing
+  ok
+  failed
+}
+
+enum Difficulty {
+  easy
+  medium
+  hard
+  unrated
+}
+
+enum Verdict {
+  accepted
+  wrong_answer
+  time_limit
+  runtime_error
+  other
+}
+
+enum SolveSource {
+  sync
+  manual
+  extension
+}
+
+enum SyncTrigger {
+  link
+  manual
+  scheduled
+}
+
+enum ContestSource {
+  clist
+  codeforces
+}
+
+model User {
+  id            String            @id @default(uuid()) @db.Uuid
+  email         String            @unique
+  username      String            @unique
+  displayName   String            @map("display_name")
+  avatarUrl     String?           @map("avatar_url")
+  bio           String?
+  college       String?
+  timezone      String            @default("UTC")
+  role          UserRole          @default(user)
+  isPublic      Boolean           @default(false) @map("is_public")
+  createdAt     DateTime          @default(now()) @map("created_at")
+  lastActiveAt  DateTime          @default(now()) @map("last_active_at")
+  deletedAt     DateTime?         @map("deleted_at")
+  onboardingCompleted Boolean      @default(false) @map("onboarding_completed")
+  accounts      PlatformAccount[]
+  submissions   Submission[]
+  solvedProblems SolvedProblem[]
+  contestReminders ContestReminder[]
+
+  @@map("users")
+}
+
+model PlatformAccount {
+  id           String     @id @default(uuid()) @db.Uuid
+  userId       String     @map("user_id") @db.Uuid
+  platform     PlatformId
+  handle       String
+  verified     Boolean    @default(false)
+  status       SyncStatus @default(pending)
+  lastSyncedAt DateTime?  @map("last_synced_at")
+  lastError    String?    @map("last_error")
+  syncCursor   Json?      @map("sync_cursor")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  submissions  Submission[]
+  activity     ActivityDaily[]
+  solvedProblems SolvedProblem[]
+  stats        PlatformStats?
+  ratings      RatingHistory[]
+  syncJobs     SyncJob[]
+
+  @@unique([userId, platform])
+  @@index([platform, handle])
+  @@map("platform_accounts")
+}
+
+model Problem {
+  id          String          @id @default(uuid()) @db.Uuid
+  platform    PlatformId
+  slug        String
+  title       String
+  url         String
+  difficulty  Difficulty      @default(unrated)
+  rating      Int?
+  tags        String[]        @default([])
+  createdAt   DateTime        @default(now()) @map("created_at")
+  submissions Submission[]
+  solvedBy    SolvedProblem[]
+
+  @@unique([platform, slug])
+  @@map("problems")
+}
+
+model Submission {
+  id                   BigInt          @id @default(autoincrement())
+  userId               String          @map("user_id") @db.Uuid
+  accountId            String          @map("account_id") @db.Uuid
+  problemId            String          @map("problem_id") @db.Uuid
+  externalSubmissionId String          @map("external_submission_id")
+  verdict              Verdict
+  language             String?
+  submittedAt          DateTime        @map("submitted_at")
+  user                 User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account              PlatformAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  problem              Problem          @relation(fields: [problemId], references: [id])
+
+  @@unique([accountId, externalSubmissionId])
+  @@index([userId, submittedAt(sort: Desc)])
+  @@map("submissions")
+}
+
+model ActivityDaily {
+  accountId   String          @map("account_id") @db.Uuid
+  day         DateTime        @db.Date
+  submissions Int             @default(0)
+  accepted    Int             @default(0)
+  account     PlatformAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@id([accountId, day])
+  @@map("activity_daily")
+}
+
+model SolvedProblem {
+  userId       String          @map("user_id") @db.Uuid
+  problemId    String          @map("problem_id") @db.Uuid
+  firstSolvedAt DateTime?      @map("first_solved_at")
+  source       SolveSource     @default(sync)
+  accountId    String?         @map("account_id") @db.Uuid
+  user         User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problem      Problem         @relation(fields: [problemId], references: [id])
+  account      PlatformAccount? @relation(fields: [accountId], references: [id], onDelete: SetNull)
+
+  @@id([userId, problemId])
+  @@map("solved_problems")
+}
+
+model PlatformStats {
+  accountId   String          @id @map("account_id") @db.Uuid
+  totalSolved Int?            @map("total_solved")
+  easySolved  Int?            @map("easy_solved")
+  mediumSolved Int?           @map("medium_solved")
+  hardSolved  Int?            @map("hard_solved")
+  rating      Int?
+  maxRating   Int?            @map("max_rating")
+  rankLabel   String?         @map("rank_label")
+  globalRank  Int?            @map("global_rank")
+  extra       Json?
+  updatedAt   DateTime        @default(now()) @updatedAt @map("updated_at")
+  account     PlatformAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@map("platform_stats")
+}
+
+model RatingHistory {
+  id         BigInt          @id @default(autoincrement())
+  accountId  String          @map("account_id") @db.Uuid
+  contestId  String          @map("contest_id")
+  contestName String         @map("contest_name")
+  ratedAt    DateTime        @map("rated_at")
+  oldRating  Int?            @map("old_rating")
+  newRating  Int             @map("new_rating")
+  rank       Int?
+  account    PlatformAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@unique([accountId, contestId])
+  @@map("rating_history")
+}
+
+model SyncJob {
+  id           String          @id @default(uuid()) @db.Uuid
+  accountId    String          @map("account_id") @db.Uuid
+  trigger      SyncTrigger
+  status       SyncStatus
+  startedAt    DateTime        @default(now()) @map("started_at")
+  finishedAt   DateTime?       @map("finished_at")
+  itemsFetched Int?            @map("items_fetched")
+  errorCode    String?         @map("error_code")
+  errorDetail  String?         @map("error_detail")
+  account      PlatformAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@index([startedAt(sort: Desc)])
+  @@map("sync_jobs")
+}
+
+model Contest {
+  id         String        @id @default(uuid()) @db.Uuid
+  platform   PlatformId
+  externalId String        @map("external_id")
+  name       String
+  url        String
+  startsAt   DateTime      @map("starts_at")
+  endsAt     DateTime      @map("ends_at")
+  source     ContestSource
+  updatedAt  DateTime      @default(now()) @updatedAt @map("updated_at")
+  reminders  ContestReminder[]
+
+  @@unique([platform, externalId])
+  @@index([startsAt])
+  @@map("contests")
+}
+
+model ContestReminder {
+  userId        String   @map("user_id") @db.Uuid
+  contestId     String   @map("contest_id") @db.Uuid
+  offsetMinutes Int      @map("offset_minutes")
+  sentAt        DateTime? @map("sent_at")
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  contest       Contest  @relation(fields: [contestId], references: [id], onDelete: Cascade)
+
+  @@id([userId, contestId, offsetMinutes])
+  @@index([sentAt, offsetMinutes])
+  @@map("contest_reminders")
+}

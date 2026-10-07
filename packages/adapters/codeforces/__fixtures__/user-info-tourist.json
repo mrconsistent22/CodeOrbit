@@ -1,0 +1,16 @@
+{
+  "status": "OK",
+  "result": [
+    {
+      "lastName": "Korotkevich",
+      "country": "Belarus",
+      "rating": 3384,
+      "handle": "tourist",
+      "firstName": "Gennady",
+      "contribution": 112,
+      "rank": "legendary grandmaster",
+      "maxRating": 4009,
+      "maxRank": "tourist"
+    }
+  ]
+}
